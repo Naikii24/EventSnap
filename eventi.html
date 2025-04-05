@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Trova Eventi - EventSnap</title>
+	<link rel="stylesheet" href="prova1.css">
+	<!-- Leaflet.js CSS -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+</head>
+<body>
+	<!-- Header -->
+	<header>
+    	<div class="container">
+        	<div class="logo">
+            	<a href="prova.html">EventSnap</a>
+        	</div>
+        	<nav>
+            	<ul>
+                	<li><a href="prova.html">Home</a></li>
+                	<li><a href="eventii.html">Eventi</a></li>
+                	<li><a href="aggiungi1.html">Aggiungi Evento</a></li>
+            	</ul>
+        	</nav>
+    	</div>
+	</header>
+
+	<!-- Sezione Trova Eventi -->
+	<section class="map-section">
+    	<h2>Trova Eventi</h2>
+    	<div id="map" style="height: 500px;"></div>
+	</section>
+
+	<script>
+    	// Inizializza la mappa centrata su una posizione predefinita (Roma)
+    	const map = L.map('map').setView([41.9028, 12.4964], 6);
+
+    	// Aggiungi il layer della mappa (OpenStreetMap)
+    	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    	}).addTo(map);
+
+    	// Eventi salvati con il form (se presenti)
+    	const userEvents = JSON.parse(localStorage.getItem('eventi')) || [];
+
+    	// Dati degli eventi predefiniti
+    	const defaultEvents = [
+        	{
+            	title: "Festa della Musica",
+            	description: "Concerto in piazza a Roma",
+            	lat: 41.9028,
+            	lon: 12.4964
+        	}
+    	];
+
+    	// Combina gli eventi predefiniti con quelli salvati
+    	const allEvents = defaultEvents.concat(userEvents);
+
+    	// Aggiungi un marker per ogni evento
+    	allEvents.forEach(event => {
+        	L.marker([event.lat, event.lon])
+            	.addTo(map)
+            	.bindPopup(`<strong>${event.title}</strong><br>${event.description}`);
+    	});
+	</script>
+</body>
+</html>
