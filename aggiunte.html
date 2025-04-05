@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Aggiungi Evento</title>
+	<link rel="stylesheet" href="prova1.css">
+
+	<!-- Stili base -->
+	<style>
+    	body {
+        	font-family: Arial, sans-serif;
+        	background-color: #f4f4f9;
+        	padding: 20px;
+    	}
+
+    	h1 {
+        	color: #333;
+        	text-align: center;
+        	margin-bottom: 30px;
+    	}
+
+    	.form-container {
+        	max-width: 600px;
+        	margin: 0 auto;
+        	background-color: #fff;
+        	padding: 20px;
+        	border-radius: 8px;
+        	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    	}
+
+    	.form-group {
+        	margin-bottom: 15px;
+    	}
+
+    	label {
+        	font-weight: bold;
+        	color: #333;
+        	display: block;
+        	margin-bottom: 5px;
+    	}
+
+    	input[type="text"], textarea {
+        	width: 100%;
+        	padding: 10px;
+        	border: 1px solid #ddd;
+        	border-radius: 5px;
+        	font-size: 14px;
+        	margin-bottom: 10px;
+    	}
+
+    	textarea {
+        	resize: vertical;
+        	height: 150px;
+    	}
+
+    	button {
+        	width: 100%;
+        	padding: 12px;
+        	background-color: #4CAF50;
+        	color: white;
+        	border: none;
+        	border-radius: 5px;
+        	font-size: 16px;
+        	cursor: pointer;
+        	transition: background-color 0.3s;
+    	}
+
+    	button:hover {
+        	background-color: #45a049;
+    	}
+
+    	.back-link {
+        	display: block;
+        	margin-top: 20px;
+        	text-align: center;
+        	color: #4CAF50;
+        	text-decoration: none;
+        	font-size: 16px;
+    	}
+
+    	.back-link:hover {
+        	text-decoration: underline;
+    	}
+	</style>
+</head>
+<body>
+
+	<h1>Aggiungi Evento</h1>
+
+	<div class="form-container">
+    	<form id="addEventForm">
+        	<div class="form-group">
+            	<label for="eventName">Nome dell'evento</label>
+            	<input type="text" id="eventName" placeholder="Es. Concerto di Musica" required>
+        	</div>
+        	<div class="form-group">
+            	<label for="eventDescription">Descrizione dell'evento</label>
+            	<textarea id="eventDescription" placeholder="Descrizione dettagliata dell'evento" required></textarea>
+        	</div>
+        	<div class="form-group">
+            	<label for="eventAddress">Indirizzo</label>
+            	<input type="text" id="eventAddress" placeholder="Es. Via Roma, 1" required>
+        	</div>
+        	<div class="form-group">
+            	<label for="eventCity">Città</label>
+            	<input type="text" id="eventCity" placeholder="Es. Roma" required>
+        	</div>
+        	<div class="form-group">
+            	<label for="eventProvince">Provincia</label>
+            	<input type="text" id="eventProvince" placeholder="Es. RM" required>
+        	</div>
+        	<button type="submit">Aggiungi Evento</button>
+    	</form>
+
+    	<!-- Link per tornare alla pagina degli eventi -->
+    	<a href="eventii.html" class="back-link">Torna alla Mappa Eventi</a>
+	</div>
+
+	<script>
+    	// Funzione per aggiungere l'evento nel localStorage
+    	document.getElementById('addEventForm').addEventListener('submit', function(e) {
+        	e.preventDefault();
+
+        	// Recupera i valori inseriti nei campi del form
+        	const eventName = document.getElementById('eventName').value;
+        	const eventDescription = document.getElementById('eventDescription').value;
+        	const eventAddress = document.getElementById('eventAddress').value;
+        	const eventCity = document.getElementById('eventCity').value;
+        	const eventProvince = document.getElementById('eventProvince').value;
+
+        	// Converte l'indirizzo in coordinate (per esempio con geocoding manuale o API)
+        	// Per semplicità, mettiamo delle coordinate statiche
+        	const eventLat = 41.9028; // latitudine (esempio per Roma)
+        	const eventLon = 12.4964; // longitudine (esempio per Roma)
+
+        	// Crea un oggetto evento
+        	const event = {
+            	title: eventName,
+            	description: eventDescription,
+            	address: eventAddress,
+            	city: eventCity,
+            	province: eventProvince,
+            	lat: eventLat,
+            	lon: eventLon
+        	};
+
+        	// Recupera gli eventi esistenti dal localStorage, se ci sono
+        	let events = JSON.parse(localStorage.getItem('eventi')) || [];
+
+        	// Aggiungi il nuovo evento all'array
+        	events.push(event);
+
+        	// Salva di nuovo gli eventi nel localStorage
+        	localStorage.setItem('eventi', JSON.stringify(events));
+
+        	// Notifica l'utente che l'evento è stato aggiunto
+        	alert('Evento aggiunto con successo!');
+        	// Reindirizza alla pagina degli eventi
+        	window.location.href = 'eventii.html';
+    	});
+	</script>
+
+</body>
+</html>
