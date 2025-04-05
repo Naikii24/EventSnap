@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Evento</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Aggiungi un Evento</h1>
+    <div class="form-container">
+        <form id="addEventForm">
+            <label for="eventName">Nome dell'evento</label>
+            <input type="text" id="eventName" required>
+
+            <label for="eventDescription">Descrizione</label>
+            <textarea id="eventDescription" required></textarea>
+
+            <label for="eventCity">Città</label>
+            <input type="text" id="eventCity" required>
+
+            <button type="submit">Aggiungi Evento</button>
+        </form>
+        <a href="eventi.html" class="back-link">Torna alla mappa</a>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
