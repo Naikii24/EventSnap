@@ -14,34 +14,49 @@
     <div id="map"></div>
     
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tabletop.js/1.5.2/tabletop.min.js"></script>
     
     <script>
-        var sheetID = "1sz5yRujumvBDYH6qGjKUhJ0Q2vBbQe1aZB4pUZg-oSE"; // Sostituisci con il tuo ID di Google Sheet
+        // Crea la mappa centrata sull'Italia
         var map = L.map('map').setView([41.9028, 12.4964], 6); // Centra sull'Italia
 
+        // Aggiungi il layer della mappa
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        function showMarkers(data) {
-            data.forEach(evento => {
-                if (evento.Latitudine && evento.Longitudine) {
-                    var marker = L.marker([evento.Latitudine, evento.Longitudine]).addTo(map);
-                    marker.bindPopup(`<b>${evento["Nome Evento"]}</b><br>${evento.Luogo}<br>${evento.Data} ${evento.Ora}`);
-                }
-            });
-        }
+        // Dati degli eventi con latitudine, longitudine, nome, luogo, data e ora
+        var eventi = [
+            {
+                nome: "Evento A",
+                luogo: "Venezia",
+                latitudine: 45.4408,
+                longitudine: 12.3155,
+                data: "2025-05-01",
+                ora: "20:00"
+            },
+            {
+                nome: "Evento B",
+                luogo: "Treviso",
+                latitudine: 45.6663,
+                longitudine: 12.2431,
+                data: "2025-05-02",
+                ora: "18:00"
+            },
+            {
+                nome: "Evento C",
+                luogo: "Padova",
+                latitudine: 45.4064,
+                longitudine: 11.8768,
+                data: "2025-06-15",
+                ora: "21:00"
+            }
+        ];
 
-        function loadData() {
-            Tabletop.init({
-                key: `https://docs.google.com/spreadsheets/d/${sheetID}/pubhtml`,
-                simpleSheet: true,
-                callback: showMarkers
-            });
-        }
-
-        loadData();
+        // Aggiungi i marker sulla mappa per ogni evento
+        eventi.forEach(evento => {
+            var marker = L.marker([evento.latitudine, evento.longitudine]).addTo(map);
+            marker.bindPopup(`<b>${evento.nome}</b><br>${evento.luogo}<br>${evento.data} ${evento.ora}`);
+        });
     </script>
 </body>
 </html>
