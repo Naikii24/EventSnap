@@ -1,74 +1,30 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Scopri gli eventi più interessanti vicino a te con EventSnap. Trova e aggiungi eventi facilmente.">
-	<meta name="keywords" content="eventi, scopri eventi, eventi vicino a te, aggiungi eventi">
-	<meta name="author" content="EventSnap">
-	<meta property="og:title" content="EventSnap - Non sai cosa fare?">
-	<meta property="og:description" content="Scopri gli eventi più interessanti vicino a te!">
-	<meta property="og:image" content="https://via.placeholder.com/600x400">
-	<meta property="og:url" content="http://eventsnap.com">
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:creator" content="@event_snap">
-	<title>EventSnap - Non sai cosa fare?</title>
-	<link rel="stylesheet" href="prova1.css">
-</head>
-<body>
-	<!-- Header -->
-	<header>
-    	<div class="container">
-        	<div class="logo">
-            	<a href="prova.html">EventSnap</a>
-        	</div>
-        	<nav>
-            	<ul>
-                	<li><a href="prova.html">Home</a></li> <!-- Corretta la destinazione del link -->
-                	<li><a href="eventii.html">Eventi</a></li> <!-- Corretta la destinazione del link -->
-                	<li><a href="aggiungi1.html">Aggiungi Evento</a></li> <!-- Corretta la destinazione del link -->
-            	</ul>
-        	</nav>
-    	</div>
-	</header>
+// Inizializza la mappa centrata su una posizione predefinita (Roma)
+const map = L.map('map').setView([41.9028, 12.4964], 6);
 
-	<!-- Hero Section -->
-	<section class="hero">
-    	<div class="hero-overlay">
-        	<div class="hero-content">
-            	<h1>Non sai cosa fare?</h1>
-            	<p>Scopri gli eventi più interessanti vicino a te!</p>
-            	<a href="eventii.html" class="cta-button">Trova Eventi</a> <!-- Corretta la destinazione del link -->
-        	</div>
-    	</div>
-	</section>
+// Aggiungi il layer della mappa (OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-	<!-- Main Section -->
-	<section class="main-content">
-    	<h2>Esplora i nostri eventi</h2>
-    	<p>Scopri le migliori esperienze nelle vicinanze, da non perdere!</p>
-    	<div class="card-container">
-        	<div class="card">
-            	<h3>Evento 1</h3>
-            	<p>Descrizione breve dell'evento.</p>
-            	<a href="#">Scopri di più</a>
-        	</div>
-        	<div class="card">
-            	<h3>Evento 2</h3>
-            	<p>Descrizione breve dell'evento.</p>
-            	<a href="#">Scopri di più</a>
-        	</div>
-        	<div class="card">
-            	<h3>Evento 3</h3>
-            	<p>Descrizione breve dell'evento.</p>
-            	<a href="#">Scopri di più</a>
-        	</div>
-    	</div>
-	</section>
+// Eventi salvati con il form (se presenti)
+const userEvents = JSON.parse(localStorage.getItem('eventi')) || [];
 
-	<!-- Footer -->
-	<footer>
-    	<p>&copy; 2025 EventSnap. Tutti i diritti riservati.</p>
-	</footer>
-</body>
-</html>
+// Dati degli eventi predefiniti
+const defaultEvents = [
+    {
+        title: "Festa della Musica",
+        description: "Concerto in piazza a Roma",
+        lat: 41.9028,
+        lon: 12.4964
+    }
+];
+
+// Combina gli eventi predefiniti con quelli salvati
+const allEvents = defaultEvents.concat(userEvents);
+
+// Aggiungi un marker per ogni evento
+allEvents.forEach(event => {
+    L.marker([event.lat, event.lon])
+        .addTo(map)
+        .bindPopup(`<strong>${event.title}</strong><br>${event.description}`);
+});
